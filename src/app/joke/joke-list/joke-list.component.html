@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="d-flex justify-content-between">
+        <div>
+            <button type="button" class="btn btn-outline-info" (click)="getJokes()"><i class="fas fa-laugh-squint"></i> All jokes</button>
+            <button type="button" class="btn btn-outline-info" (click)="getTop5()" style="margin-left: 10px;"><i class="fas fa-arrow-up"></i> Top 5</button>
+            <button type="button" class="btn btn-outline-info" (click)="getJotd()" style="margin-left: 10px;"><i class="fas fa-calendar-alt"></i> Joke of the day</button>
+            <button type="button" class="btn btn-outline-info" (click)="getGood()" style="margin-left: 10px;"><i class="fas fa-thumbs-up"></i> Good jokes</button>
+            <button type="button" class="btn btn-outline-info" (click)="getBad()" style="margin-left: 10px;"><i class="far fa-thumbs-down"></i> Bad jokes</button>
+            <button type="button" class="btn btn-outline-info" (click)="getRandom()" style="margin-left: 10px;"><i class="fas fa-random"></i> Random joke</button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-outline-success" (click)="addJokeForm()"><i class="fas fa-plus"></i></button>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="margin-top: 5px;">
+    <div class = "list-group">
+        <li style="margin-top: 5px;" *ngFor="let joke of jokes, let i = index">
+            <a routerLink="/jokes/{{joke.id}}" class="list-group-item list-group-item-action">
+                {{joke.jokeText}}
+                <span class="badge badge-primary badge-pill" style="float:right;">{{joke?.user.username}}</span>
+            </a>
+            
+            <button class="btn btn-outline-info btn-sm" title="Like joke" (click)="like(joke)"><i class="fas fa-thumbs-up"></i>({{joke.likes}})</button>    
+            <button class="btn btn-outline-info btn-sm btn-sm" title="Dislike joke" (click)="dislike(joke)"><i class="far fa-thumbs-down"></i>({{joke.dislikes}})</button>  
+            <ng-container *ngIf="isFaved[i] === 1">
+                <button class="btn btn-outline-danger btn-sm" title="Unavourite joke" (click)="unfavourite(joke)"><i class="fas fa-heart"></i></button> 
+            </ng-container>
+            <ng-container *ngIf="isFaved[i] !== 1">
+                <button class="btn btn-outline-danger btn-sm" title="Favourite joke" (click)="favourite(joke)"><i class="far fa-heart"></i></button> 
+            </ng-container>
+            <button class="btn btn-outline-warning btn-sm" *ngIf="activeUser.id === joke.user.id || activeUser.role === 'ADMIN'" title="Delete joke" (click)="delete(joke)"><i class="far fa-trash-alt"></i></button>   
+        </li>
+    </div>
+</div>
+
+<div class="container" *ngIf="addForm" style="margin-top: 30px;">
+    <form>
+        <fieldset>
+            <h3 class="display-4">Add joke:</h3>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Your joke" id="inputDefault" #jokeInput>
+            </div>
+            <div style="text-align: center;">
+                <button type="button" class="btn btn-outline-success" (click)="addJoke(jokeInput.value);">Add</button>
+            </div>
+        </fieldset> 
+    </form>
+</div>

@@ -1,0 +1,36 @@
+<!-- ispis detalja vica ako je selektiran -->
+<div class="container" *ngIf="joke">
+    <div class="row justify-content-center">
+            <button type="button" class="btn btn-link" (click)="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>    
+    <div class="row justify-content-center">    
+        <div class="card text-white bg-primary mb-3" style="max-width: 40rem; min-width: 20rem;">
+            <div class="card-header">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <i class="fas fa-user"></i>  
+                        <a routerLink="/users/{{joke.user.id}}" >  {{joke.user.username}}</a> 
+                    </div>
+                    <div>
+                        <i class="fas fa-thumbs-up"></i> {{joke.likes}}  <i class="far fa-thumbs-down"></i> {{joke.dislikes}}
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{joke.jokeText}}</p>
+            </div>
+            <button *ngIf="joke.user.id === activeUser.id || activeUser.role === 'ADMIN'" type="button" class="btn btn-outline-info" style="margin-top: 10px;" (click)="edit()"><i class="fas fa-edit"></i> Edit</button>
+        </div>
+    </div>
+    <div *ngIf="editor">
+        <div>
+            <h3 class="display-4">Enter new joke text:</h3>
+            <div class="form-group">
+                <input [(ngModel)]="joke.jokeText" type="text" class="form-control" placeholder="New text"/>
+            </div>
+            <div class="row justify-content-center">
+                <button type="button" class="btn btn-outline-success"(click)="save()"><i class="far fa-save"></i> Save</button>
+            </div>
+        </div>
+    </div>
+</div>

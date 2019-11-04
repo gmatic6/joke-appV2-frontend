@@ -1,0 +1,15 @@
+<div class = "container" style="margin-top: 50px;" *ngIf="messageService.messages.length">
+  <div class="row justify-content-center">
+    <div class="card border-danger mb-3" style="max-width: 20rem;">
+      <div class="card-header">Messages</div>
+      <div class="card-body">
+        <div *ngFor='let message of messageService.messages'>
+            <p class="card-text">{{message}}</p>
+        </div>
+        <div style="text-align: center;">
+            <button type="button" class="btn btn-outline-danger" style="margin-top: 10px;" (click)="messageService.clear()">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
